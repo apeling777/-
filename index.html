@@ -16,8 +16,7 @@
 
         var wmsLayer = new ol.layer.Tile({
             source: new ol.source.TileWMS({
-                // ★ 여기를 https 로 수정했습니다! ★
-                url: 'https://safemap.go.kr/openapi2/IF_0087_WMS', 
+                url: 'http://safemap.go.kr/openapi2/IF_0087_WMS', // 원래대로 http 사용
                 params: {
                     'serviceKey': 'HTMM1RG9-HTMM-HTMM-HTMM-HTMM1RG9OW',
                     'LAYERS': 'A2SM_CRMNLHSPOT_TOT',
