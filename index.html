@@ -16,15 +16,25 @@
 
         var wmsLayer = new ol.layer.Tile({
             source: new ol.source.TileWMS({
-                url: 'http://safemap.go.kr/openapi2/IF_0087_WMS', // 원래대로 http 사용
+                url: 'http://safemap.go.kr/openapi2/IF_0087_WMS',
                 params: {
                     'serviceKey': 'HTMM1RG9-HTMM-HTMM-HTMM-HTMM1RG9OW',
-                    'LAYERS': 'A2SM_CRMNLHSPOT_TOT',
-                    'STYLES': 'A2SM_CrmnlHspot_Tot_Tot',
-                    'FORMAT': 'image/png',
-                    'TRANSPARENT': true
+                    'layers': 'A2SM_CRMNLHSPOT_TOT',
+                    'styles': 'A2SM_CrmnlHspot_Tot_Tot',
+                    'format': 'image/png',
+                    'transparent': true
                 },
-                serverType: 'geoserver'
+                serverType: 'geoserver',
+                // ★ 세이프맵 서버 규칙에 맞게 명령어를 강제로 소문자로 바꿔주는 핵심 코드 ★
+                tileLoadFunction: function(imageTile, src) {
+                    var newUrl = src.replace(/([?&])([^=]+)/g, function(match, sep, key) {
+                        if (key === 'serviceKey') {
+                            return sep + key;
+                        }
+                        return sep + key.toLowerCase();
+                    });
+                    imageTile.getImage().src = newUrl;
+                }
             })
         });
 
